@@ -40,5 +40,5 @@ const userSchema = mongoose.Schema({
 //      : 스키마를 감싸는 역할 
 const User = mongoose.model('User', userSchema)
 
-//export
+
 module.exports = { User }
