@@ -31,7 +31,7 @@ mongoose.connect('mongodb+srv://test1:bear7464*@cluster0.j7rgu.mongodb.net/<dbna
 app.get('/', (req, res) => {
     //req, res는 node가 제공 해준다 
     //http://localhost:4000/ 접속시 
-    res.send('moomin 최고 ')
+    res.send('무덕이가  최고 ')
 })
 
 app.listen(port, () => {
@@ -64,6 +64,7 @@ app.post('/register', (req, res) => {
     // 이렇게  req.body에 정보를 담을수 있는것은 body-parser가 있기 때문
 
     user.save((err, userInfo) => {
+        //user.save() mongo db 메서드
         if (err) return res.json({
             success: false, err
         })
@@ -75,7 +76,16 @@ app.post('/register', (req, res) => {
         // res.status(200) => 성공하면 true 반환 
 
     })
-    //user.save() mongo db 메서드
+
+    // 5. node mon
+    // 원래는 node 서버를 킨후 무언가 바뀐 내용이 있다면
+    // 서버를 새로 열어야지 바뀐 부분이 반영이 되는데
+    // node mon은 닫고 새로열지 않아도 바뀐부분이 반영이 되도록 해준다
+    // npm install nodemon --save-dev
+    // dev 는 local에서만 사용하겠다는 의미
+    // 설치후 package.json에 
+    // "backend" : "nodemon index.js"를 추가
+    // node 몬을 이용해 index.js를 기동하겠다는 의미
 
 
 })
