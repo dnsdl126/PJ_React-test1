@@ -21,9 +21,12 @@ mongoose.connect('mongodb+srv://test1:bear7464*@cluster0.j7rgu.mongodb.net/<dbna
 app.get('/', (req, res) => {
     //req, res는 node가 제공 해준다 
     //http://localhost:4000/ 접속시 
-    res.send('Hello World!')
+    res.send('moomin 최고 ')
 })
 
 app.listen(port, () => {
     console.log(`Example app listening at http://localhost:${port}`)
 })
+
+
+// 3. nodemon : 서버를 내리고 올리지 않았도 소스변화를 감지해서 보여준다
