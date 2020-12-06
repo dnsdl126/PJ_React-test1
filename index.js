@@ -9,6 +9,11 @@ const app = express()
 const port = 4000
 const { User } = require("./MongoDB/User");
 const bodyparser = require('body-parser');
+// config/key 에는
+// 배포인지 local 인지에 따라 폴더(로컬 : dev.js, 배포 : props.js)를 확인해 
+// mongo db 정보를 가지고 온다
+const config = require('./config/key')
+
 
 //body parser 가 client에서 오는 정보를 
 // 서버에서 분석해서 가지고 올수 있게 해주는데
@@ -23,7 +28,7 @@ app.use(bodyparser.json());
 // npm intstall mongoose
 //require 외부 모듈을 가져올수 있게 하는 메서드
 const mongoose = require('mongoose')
-mongoose.connect('mongodb+srv://test1:bear7464*@cluster0.j7rgu.mongodb.net/<dbname>?retryWrites=true&w=majority', {
+mongoose.connect(config.mongoURI, {
     useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true, useFindAndModify: false
 }).then(() => console.log('MongoDB Connected..')).catch(err => console.log(err));
 
