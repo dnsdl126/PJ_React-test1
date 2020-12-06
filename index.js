@@ -7,6 +7,16 @@
 const express = require('express')
 const app = express()
 const port = 4000
+const { User } = require("./MongoDB/User");
+const bodyparser = require('body-parser');
+
+//body parser 가 client에서 오는 정보를 
+// 서버에서 분석해서 가지고 올수 있게 해주는데
+// aplication/x-www-form-urlencded 형식으로 된 데이터를 가지고 올수잇게
+app.use(bodyparser.urlencoded({ extended: true }));
+// body parser 가
+// applictation/json (json)형식으로 데이터된것을 가지고 올수 있게
+app.use(bodyparser.json());
 
 
 // 2. mongoDB 설치
@@ -29,4 +39,44 @@ app.listen(port, () => {
 })
 
 
-// 3. nodemon : 서버를 내리고 올리지 않았도 소스변화를 감지해서 보여준다
+// 3. body-parser :
+// client 가 request를 server에 보내면 데이터를 분석해 req.body로 출력하는 역할
+
+// 4. Post man
+// 로그인하거나 회원가입할때 현재로는 만들어진 client가 없으므로
+// 대처할수 있는 API
+// 검색해서 받을수 있음
+// post 나 get 방식으로 데이터를 보낼수있음
+app.post('/register', (req, res) => {
+    // 회원가입할때 필요한 정보들을 client 에서 가지고 오면
+    // 이데이터를 DB에 넣어주준다
+
+    const user = new User(req.body)
+    // MongoDB폴더에 만들어진 user 입력할 정보
+    // 상단에 const { User } = require("./MongoDB/User")
+    // 로 연동해둠
+    // req.body 안에는 
+    // json 형식으로 된 회원 정보
+    // { id : " mooming" ,
+    //   password : "1234"
+    // }
+    // 와같은 정보가 담겨 있다
+    // 이렇게  req.body에 정보를 담을수 있는것은 body-parser가 있기 때문
+
+    user.save((err, userInfo) => {
+        if (err) return res.json({
+            success: false, err
+        })
+        // err가 발생하면 json 형식으로 false 와 err메세지 client에 반환
+
+        return res.status(200).json({
+            success: true
+        })
+        // res.status(200) => 성공하면 true 반환 
+
+    })
+    //user.save() mongo db 메서드
+
+
+})
+
