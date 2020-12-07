@@ -5,6 +5,7 @@ const bcrypt = require('bcrypt');
 //2. salt 생성
 //3. salt 이용해 암호화
 const saltRounds = 10
+const jwt = require('jsonwebtoken');
 
 //Schema 
 // MongoDB는 테이블이 없기 때문에 같은 필드인데 다른 자료형이 들어갈수도 있다
@@ -78,8 +79,42 @@ userSchema.pre('save', function (next) {
                 //user.save로 돌아간다
             })
         })
+    } else {
+        next();
     }
 })
+
+userSchema.methods.comparePassword = function (plainPassword, cb) {
+    //plainPassword => 사용자가 입력한 password 
+    // DB에 저장된 암호화된 비밀번호랑 같은지 확인이 필요
+
+    bcrypt.compare(plainPassword, this.password, function (err, isMatch) {
+        if (err) return cb(err);
+        cb(null, isMatch);
+    })
+
+}
+
+userSchema.methods.passtoken = function (cb) {
+
+    var user = this;
+
+    //jsonwebtoken을 이용해서 token을 생성
+    var token = jwt.sign(user._id.toHexString(), 'secretToken')
+    // _id는 DB의 id
+    // user._id +  'secretToken' = token 을 만든다
+    // token 해석시 
+    // 'secretToken'를 넣으면 user._id가 나온다
+    // token을 가지고 user가 누군지 알수있다
+    user.token = token
+    user.save(function (err, user) {
+        if (err) return cb(err)
+        cb(null, user)
+    })
+
+
+
+}
 
 //model : DB에서 데이터를 읽고, 생성하고, 수정하는 프로그래밍 인터페이스
 //      : 스키마를 감싸는 역할 
