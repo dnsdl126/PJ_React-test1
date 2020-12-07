@@ -68,13 +68,13 @@ app.post('/register', (req, res) => {
     // 와같은 정보가 담겨 있다
     // 이렇게  req.body에 정보를 담을수 있는것은 body-parser가 있기 때문
 
+    // save 하기 전에 bycrpt로 암호화 작업 필요
     user.save((err, userInfo) => {
         //user.save() mongo db 메서드
         if (err) return res.json({
             success: false, err
         })
         // err가 발생하면 json 형식으로 false 와 err메세지 client에 반환
-
         return res.status(200).json({
             success: true
         })
@@ -92,6 +92,9 @@ app.post('/register', (req, res) => {
     // "backend" : "nodemon index.js"를 추가
     // node 몬을 이용해 index.js를 기동하겠다는 의미
 
+
+    //6. bcrypt 설치
+    // 회원가입시 비밀번호를 암호화 하여 저장되도록 진행
 
 })
 
