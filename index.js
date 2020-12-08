@@ -12,10 +12,11 @@ const bodyparser = require('body-parser');
 // config/key 에는
 // 배포인지 local 인지에 따라 폴더(로컬 : dev.js, 배포 : props.js)를 확인해 
 // mongo db 정보를 가지고 온다
-const config = require('./config/key')
+const config = require('./config/key');
 
 const cookieparser = require('cookie-parser');
 
+const { auth } = require('./middleware/auth');
 
 //body parser 가 client에서 오는 정보를 
 // 서버에서 분석해서 가지고 올수 있게 해주는데
@@ -55,7 +56,7 @@ app.listen(port, () => {
 // 대처할수 있는 API
 // 검색해서 받을수 있음
 // post 나 get 방식으로 데이터를 보낼수있음
-app.post('/register', (req, res) => {
+app.post('/api/users/register', (req, res) => {
     // 회원가입할때 필요한 정보들을 client 에서 가지고 오면
     // 이데이터를 DB에 넣어주준다
 
@@ -146,4 +147,35 @@ app.post('/api/users/login', (req, res) => {
             })
         })
     })
+})
+
+//Auth 기능
+// 어떤 페이지는 로그인시만 가능하고
+// 어떤 페이지는 관리자만 이용할수 있는 기능이 필요한데
+// 이걸 하나하나 체크해주기 위해 필요
+// 생성했던 token을 유저정보에도 넣고 client쪽에는 cookie에 넣고 
+// 서버에서는 DB에 넣어둠
+// DB토큰과 cookie 토큰이 서로 같은지 계속 체크를 해줘야한다
+// 1. cookie에서 저장된 Token을 server에서 가져와서 decode 진행
+// 2. decode하면 user ID가 나오는데 이 ID를 이용해서 DB컬렉션에서 유저를 찾은휴
+// 3. 쿠키에서 받아온 token이 유저도 갖고 있는지 확인
+//
+
+app.get('/api/users/auth', auth, (req, res) => {
+    // auth는 미들웨어
+    // /api/users/auth'에서 req를 받고 response 하기전에 중간에 무엇인가 작업을 해준다 
+    // auth의 function는 middleware폴더에 auth.js에 명시 모듈화 를 해서 다른곳에서 사용가능
+
+    // auth.js 와 user.js를 다 통과했다면 authentication이 true라는 말
+    res.status(200).json({
+        _id: req.user._id,
+        isAdmin: req.user.role === 0 ? false : true,
+        isAuth: true,
+        email: req.user.email,
+        name: req.user.name,
+        lastname: req.user.lastname,
+        role: req.user.role,
+        image: req.user.image
+    })
+
 })
