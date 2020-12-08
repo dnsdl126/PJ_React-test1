@@ -17,7 +17,6 @@ let auth = (req, res, next) => {
 
         //reqest에 token과 user를 넣어주는 것은
         // idnex.js 에서도 user정보와 token을 사용할수있도록 해주는 것 
-        console.log('userh', user)
 
         req.token = token;
         req.user = user;
@@ -27,9 +26,6 @@ let auth = (req, res, next) => {
     // 3. 유저가 있으면 인증 okay
 
     // 4. 유저가 없으면 인증 no
-
-
-
 }
 
 

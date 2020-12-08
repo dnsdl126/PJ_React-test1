@@ -116,6 +116,52 @@ userSchema.methods.passtoken = function (cb) {
 
 }
 
+
+userSchema.methods.comparePassword = function (plainPassword, cb) {
+
+    console.log(plainPassword);
+    //plainPassword 1234567    암호회된 비밀번호 $2b$10$l492vQ0M4s9YUBfwYkkaZOgWHExahjWC
+    bcrypt.compare(plainPassword, this.password, function (err, isMatch) {
+        if (err) return cb(err);
+        cb(null, isMatch);
+    })
+}
+
+userSchema.methods.generateToken = function (cb) {
+
+    var user = this;
+    console.log('user._id', user._id)
+    //jsonwebtoken을 이용해 token 생성
+    var token = jwt.sign(user._id.toHexString(), 'secretToken')
+    //user._id + 'secretToken' = token
+    // -> 'secretToken' -> user._id
+    user.token = token
+    user.save(function (err, user) {
+        if (err) return cb(err)
+        cb(null, user)
+
+    })
+}
+
+userSchema.statics.findByToken = function (token, cb) {
+    var user = this;
+    //token을 decode
+    //decode 방법은 jsonwebtoken 에 나와있음
+    //token 생성시 user._id + '' = token
+    //
+    jwt.verify(token, 'secretToken', function (err, decoded) {
+        //decoded
+        //decoded된것은 user_id
+        //유저 아이디를 이용해 유저를 찾은 다음
+        // 클라이언트에서 가져온 token과 DB에 보관된 토큰이 일치하는지 확인
+        user.findOne({ "_id": decoded, "token": token }, function (err, user) {
+            if (err) return cb(err);
+            cb(null, user)
+        })
+    })
+}
+
+
 //model : DB에서 데이터를 읽고, 생성하고, 수정하는 프로그래밍 인터페이스
 //      : 스키마를 감싸는 역할 
 const User = mongoose.model('User', userSchema)

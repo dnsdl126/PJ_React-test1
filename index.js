@@ -177,5 +177,18 @@ app.get('/api/users/auth', auth, (req, res) => {
         role: req.user.role,
         image: req.user.image
     })
-
+})
+//로그아웃
+app.get('/api/users/logout', auth, (req, res) => {
+    //부여했던 token을 지워주면 된다
+    // 인증할때 cooike 토큰과 db 토큰을 확인해서 인증을 확인했기때문
+    // 로그아웃시 토큰만 지워주면 된다
+    User.findOneAndUpdate({ _id: req.user._id },
+        { token: "" }
+        , (err, user) => {
+            if (err) return res.json({ success: false, err });
+            return res.status(200).send({
+                success: true
+            })
+        })
 })
