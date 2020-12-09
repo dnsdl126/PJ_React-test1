@@ -7,6 +7,7 @@ import { Provider } from 'react-redux';
 import { applyMiddleware, createStore } from 'redux';
 import promiseMiddleware from 'redux-promise';
 import ReduxThunk from 'redux-thunk';
+import Reducer from './_reducers';
 
 // 원래는 createStore만 해도 되지만 
 //redux 미들웨어를 이용해서

@@ -11,7 +11,7 @@ import { combineReducers } from 'redux';
 // 인증이나 comment에 관한 reducer 을 만들었다고 하면
 // 이걸 하나로 묶어서 쓸수 있게한다
 const rootReducer = combineReducers({
-    //user
+    // user
 })
 
 export default rootReducer;

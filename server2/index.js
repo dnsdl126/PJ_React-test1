@@ -43,6 +43,8 @@ app.get('/', (req, res) => {
     res.send('무덕이가  최고 ')
 })
 
+app.get('/api/hello', (req, res) => res.send('Hello World!~~ '))
+
 app.listen(port, () => {
     console.log(`Example app listening at http://localhost:${port}`)
 })

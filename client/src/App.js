@@ -8,7 +8,7 @@ import {
 
 import LandingPage from './component/views/landingPage/LandingPage';
 import RegisterPage from './component/views/RegisterPage/RegisterPage';
-import LoginPage from './component/views/LoginPage/LoginPage';
+import LoginPage from './component/views/LoginPage/LoginPage'
 
 
 function App() {
@@ -19,11 +19,9 @@ function App() {
         <hr />
         <Switch>
           <Route exact path="/" component={LandingPage} />
-          <LandingPage />
-          <Route exact path="/RegisterPage" component={RegisterPage} />
-          <RegisterPage />
-          <Route exact path="/LoginPage" component={LoginPage} />
-          <LoginPage />
+          <Route exact path="/register" component={RegisterPage} />
+          <Route exact path="/login" component={LoginPage} />
+
         </Switch>
       </div>
     </Router>
