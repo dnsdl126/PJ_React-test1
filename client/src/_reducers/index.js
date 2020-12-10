@@ -1,5 +1,5 @@
 import { combineReducers } from 'redux';
-//import user from './user_reducer';
+import user from './user_reducer';
 
 //combineReducers
 //스토어에 reducer 가 여러개가 있을수 있는데
@@ -11,7 +11,7 @@ import { combineReducers } from 'redux';
 // 인증이나 comment에 관한 reducer 을 만들었다고 하면
 // 이걸 하나로 묶어서 쓸수 있게한다
 const rootReducer = combineReducers({
-    // user
+    user
 })
 
 export default rootReducer;
