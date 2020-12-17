@@ -15,6 +15,11 @@ export default function (state = {}, action) {
         case LOGIN_USER:
             //nextstate를 return 해줘야한다
             //...state => state가 빈 state
+            //google redux dev 툴에서 
+            // loginSuccess 가 보이는 이유는
+            // node서버에서 보내온 정보를 담아뒀기 때문에 
+            // action에서 paload에 reqeust를 보내고 받은 데이터를payload로 담아뒀다
+
             return { ...state, loginSuccess: action.payload }
             break;
         case REGISTER_USER:
