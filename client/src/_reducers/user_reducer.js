@@ -26,6 +26,11 @@ export default function (state = {}, action) {
             return { ...state, register: action.payload }
             break;
         case AUTH_USER:
+            //userData
+            // node서버 index.js부분에보면 
+            // app.get('api/user/auth) 라우터 부분에서 모든 처리하고 나면 
+            // 인증된 사람인지에 따라 true false 등 client에 전해주고 있는데
+            // action.payload 에 담겨있기 때문에 userData로 수정 다른이름도 상관없다.
             return { ...state, userData: action.payload }
             break;
         default:

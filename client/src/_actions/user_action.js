@@ -35,3 +35,15 @@ export function registerUser(dataToSubmit) {
         payload: request
     }
 }
+
+export function auth() {
+
+    //get 메소드여서 dataToSubmit -> body 부분 필요가 없다
+    const request = axios.get('/api/users/auth')
+        .then(response => response.data)
+
+    return {
+        type: AUTH_USER,
+        payload: request
+    }
+}

@@ -12,6 +12,9 @@ function LandingPage(props) {
         axios.get(`/api/users/logout`)
             .then(response => {
                 if (response.data.success) {
+
+                    //history 자체가 react router dom 이있어야 사용됨
+                    //마지막 에 withRouter 가 있어야함    
                     props.history.push("/login")
                 } else {
                     alert('로그아웃 하는데 실패 했습니다.')
