@@ -8,6 +8,7 @@ function LandingPage(props) {
             .then(response => { console.log(response) })
     }, [])
 
+    console.log(props.match)
     const onClickHandler = () => {
         axios.get(`/api/users/logout`)
             .then(response => {
