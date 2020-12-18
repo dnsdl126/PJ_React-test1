@@ -8,7 +8,7 @@ import { withRouter } from 'react-router-dom';
 function LoginPage(props) {
     const dispatch = useDispatch();
 
-    console.log(props)
+
     // 로직
     // 타이핑 할때 state을 변경하면 ->input 태그의 value가 바뀐다
     // 1.  타이핑을 한다 

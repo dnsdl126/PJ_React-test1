@@ -11,13 +11,13 @@ import RegisterPage from './component/views/RegisterPage/RegisterPage';
 import LoginPage from './component/views/LoginPage/LoginPage'
 import Auth from './hoc/auth'
 import UploadProductPage from './component/views/UploadProductPage/UploadProductPage'
+import NavBar from './component/views/NavBar/NavBar'
 
 function App() {
   return (
     <Router>
-      <div>
-
-        <hr />
+      <NavBar />
+      <div style={{ paddingTop: '69px', minHeight: 'calc(100vh - 80px)' }}>
         <Switch>
           <Route exact path="/" component={Auth(LandingPage, null, true)} />
           <Route exact path="/register" component={Auth(RegisterPage, false)} />

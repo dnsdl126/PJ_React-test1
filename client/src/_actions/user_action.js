@@ -4,6 +4,8 @@ import {
     REGISTER_USER,
     AUTH_USER
 } from './types'
+import { USER_SERVER } from '../component/Config'
+
 
 // redux 순서
 //dispath가 action으로 정보를 보내면
@@ -12,7 +14,7 @@ export function loginUser(dataToSubmit) {
     //dataToSubmit === body(Email, password)
 
     //request라는 변수에 지정 
-    const request = axios.post('/api/users/login', dataToSubmit)
+    const request = axios.post(`${USER_SERVER}/login`, dataToSubmit)
         .then(response => response.data)
 
     //return 을해서 reducer로 보내줘야한다 
@@ -27,7 +29,7 @@ export function loginUser(dataToSubmit) {
 
 export function registerUser(dataToSubmit) {
 
-    const request = axios.post('/api/users/register', dataToSubmit)
+    const request = axios.post(`${USER_SERVER}/register`, dataToSubmit)
         .then(response => response.data)
 
     return {
@@ -39,7 +41,7 @@ export function registerUser(dataToSubmit) {
 export function auth() {
 
     //get 메소드여서 dataToSubmit -> body 부분 필요가 없다
-    const request = axios.get('/api/users/auth')
+    const request = axios.get(`${USER_SERVER}/auth`)
         .then(response => response.data)
 
     return {
